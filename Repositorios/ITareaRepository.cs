@@ -1,6 +1,6 @@
 namespace webApi.Repositorios{
     public interface ITareaRepository{
-        public Tarea Create(int idTablero, Tarea Tarea);
+        public void Create(int idTablero, Tarea Tarea);
         public void Update(int id, Tarea Tarea);
         public Tarea Get(int id);
         public List<Tarea> GetByTablero(int idTablero);
