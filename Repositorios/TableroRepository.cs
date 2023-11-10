@@ -60,8 +60,65 @@ namespace webApi.Repositorios{
             }
             return tableros;
         }
-        public Tablero Get(int id);
-        public List<Tablero> GetByUser(int idUsuario);
-        public void Remove(int id);
+        public Tablero Get(int id){
+            var queryString = "SELECT * FROM Tablero WHERE id = @idTablero";
+
+            var tablero = new Tablero();
+            using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+            {
+                connection.Open();
+                SQLiteCommand command = new SQLiteCommand(queryString, connection);
+                command.Parameters.Add(new SQLiteParameter("@idTablero", id));
+                using(SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        tablero.Id = Convert.ToInt32(reader["id"]);
+                        tablero.IdUsuarioPropietario = Convert.ToInt32(reader["id_usuario_propietario"]);
+                        tablero.Nombre = reader["nombre"].ToString();
+                        tablero.Descripcion = reader["descripcion"].ToString();
+                    }
+                }
+                connection.Close();
+            }
+
+            return (tablero);
+        }
+        public List<Tablero> GetByUser(int idUsuario){
+            var queryString = "SELECT * FROM Tablero WHERE id_usuario_propietaerio = @idUser";
+
+            var tableros = new List<Tablero>();
+            using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+            {
+                connection.Open();
+                SQLiteCommand command = new SQLiteCommand(queryString, connection);
+                command.Parameters.Add(new SQLiteParameter("@idUser", idUsuario));
+                using(SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var tablero = new Tablero();
+                        tablero.Id = Convert.ToInt32(reader["id"]);
+                        tablero.IdUsuarioPropietario = Convert.ToInt32(reader["id_usuario_propietario"]);
+                        tablero.Nombre = reader["nombre"].ToString();
+                        tablero.Descripcion = reader["descripcion"].ToString();
+                        tableros.Add(tablero);
+                    }
+                }
+                connection.Close();
+            }
+
+            return (tableros);
+        }
+        public void Remove(int id){
+            var queryString = "DELETE FROM Tablero WHERE id = @id";
+            using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+            {
+                connection.Open();
+                SQLiteCommand command = new SQLiteCommand(queryString, connection);
+                command.Parameters.Add(new SQLiteParameter("@id", id));
+                connection.Close();
+            }
+        }
     }
 }
