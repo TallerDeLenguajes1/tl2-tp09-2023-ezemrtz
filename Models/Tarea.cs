@@ -1,6 +1,6 @@
 namespace webApi;
 
-enum EstadoTarea{
+public enum EstadoTarea{
     Ideas,
     ToDo,
     Doing,
@@ -21,6 +21,6 @@ public class Tarea{
     public string Nombre { get => nombre; set => nombre = value; }
     public string Descripcion { get => descripcion; set => descripcion = value; }
     public string Color { get => color; set => color = value; }
-    internal EstadoTarea Estado { get => estado; set => estado = value; }
+    public EstadoTarea Estado { get => estado; set => estado = value; }
     public int IdUsuarioAsignado { get => idUsuarioAsignado; set => idUsuarioAsignado = value; }
 }

@@ -16,7 +16,7 @@ namespace webApi.Repositorios{
 
                 command.Parameters.Add(new SQLiteParameter("@idUser", tablero.IdUsuarioPropietario));
                 command.Parameters.Add(new SQLiteParameter("@nombre", tablero.Nombre));
-                command.Parameters.Add(new SQLiteParameter("@idUser", tablero.Descripcion));
+                command.Parameters.Add(new SQLiteParameter("@descripcion", tablero.Descripcion));
 
                 command.ExecuteNonQuery();
 
@@ -32,7 +32,7 @@ namespace webApi.Repositorios{
                 command.Parameters.Add(new SQLiteParameter("@idUser", tablero.IdUsuarioPropietario));
                 command.Parameters.Add(new SQLiteParameter("@nombre", tablero.Nombre));
                 command.Parameters.Add(new SQLiteParameter("@descripcion", tablero.Descripcion));
-                command.Parameters.Add(new SQLiteParameter("@id", tablero.Id));
+                command.Parameters.Add(new SQLiteParameter("@id", id));
                 command.ExecuteNonQuery();
                 connection.Close();
             }
@@ -117,6 +117,7 @@ namespace webApi.Repositorios{
                 connection.Open();
                 SQLiteCommand command = new SQLiteCommand(queryString, connection);
                 command.Parameters.Add(new SQLiteParameter("@id", id));
+                command.ExecuteNonQuery();
                 connection.Close();
             }
         }

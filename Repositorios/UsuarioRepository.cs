@@ -7,14 +7,14 @@ namespace webApi.Repositorios{
     public class UsuarioRepository : IUsuarioRepository{
         private string cadenaConexion = "Data Source=db/kanban.db;Cache=Shared";
         public void Create(Usuario usuario){
-            var query = $"INSERT INTO Usuario (nombre_de_usuario) VALUES (@nombre)";
+            var query = @"INSERT INTO Usuario (nombre_de_usuario) VALUES (@nombre);";
             using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
             {
 
-                connection.Open();
                 var command = new SQLiteCommand(query, connection);
+                connection.Open();
 
-                command.Parameters.Add(new SQLiteParameter("@name", usuario.NombreDeUsuario));
+                command.Parameters.Add(new SQLiteParameter("@nombre", usuario.NombreDeUsuario));
 
                 command.ExecuteNonQuery();
 
@@ -29,6 +29,7 @@ namespace webApi.Repositorios{
                 connection.Open();
                 var command = new SQLiteCommand(query, connection);
                 command.Parameters.Add(new SQLiteParameter("@name", usuario.NombreDeUsuario));
+                command.Parameters.Add(new SQLiteParameter("@id", id));
                 command.ExecuteNonQuery();
                 connection.Close();
             }
@@ -84,6 +85,7 @@ namespace webApi.Repositorios{
                 connection.Open();
                 SQLiteCommand command = new SQLiteCommand(queryString, connection);
                 command.Parameters.Add(new SQLiteParameter("@idUser", id));
+                command.ExecuteNonQuery();
                 connection.Close();
             }
         }
